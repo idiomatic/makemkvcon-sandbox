@@ -1,0 +1,29 @@
+;;; -*- mode: scheme -*-
+(version 1)
+(deny default)
+(import "bsd.sb")
+(allow file-write* file-read-data file-read-metadata
+  (regex "^/Volumes/Rip")
+  (regex #"/Rip")
+  (regex "^(/private)?/tmp/")
+  (regex #"/.MakeMKV"))
+(allow file-read-data file-read-metadata
+  (regex #"/.MakeMKV")
+  (regex "^/Applications/MakeMKV.app/Contents")
+  (regex #"/Library/MakeMKV")
+  (regex "^/usr/local/bin")
+  (literal "/private/etc/ssl/cert.pem")
+  (literal "/private/etc/ssl/openssl.cnf"))
+(allow file-read-data file-ioctl
+  (regex "^/dev/rdisk"))
+(allow process-exec 
+  (regex "^/Applications/MakeMKV.app/Contents/MacOS/"))
+
+(allow user-preference-read)
+(allow network-outbound
+  (remote tcp "*:443"))
+(allow authorization-right-obtain
+  (right-name "system.burn"))
+(allow iokit-open)
+(allow mach-lookup
+  (global-name "com.apple.TrustEvaluationAgent"))
